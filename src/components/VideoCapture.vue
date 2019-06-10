@@ -1,106 +1,74 @@
 <template>
   <section class="video-cap-container">
-    <video ref="videoRec" autoplay></video>
-    <button type="button" @click="startRecording" class="btn rec">
-      <i class="fas fa-video"></i>
-    </button>
-    <button type="button" @click="stopRecording" class="btn stop">
-      <i class="fas fa-video"></i>
-    </button>
-    <video ref="videoPlay"></video>
+    <div v-if="!isFinished" class="stream-container">
+      <video ref="videoRec" class="camera" autoplay></video>
+      <button v-if="!isRecording" @click="record" class="btn">
+        <i class="fas fa-circle"></i>
+      </button>
+      <button v-else @click="stop" class="btn">
+        <i class="far fa-circle"></i>
+      </button>
+    </div>
+    <div v-if="isFinished">
+      <video ref="videoPlay" class="camera" loop autoplay></video>
+      <button type="button" class="btn-capture" @click.prevent="resetVideo">
+        <i class="fas fa-undo-alt"></i>
+      </button>
+      <button type="button" class="btn-capture" @click.prevent="done">
+        <i class="fas fa-thumbs-up"></i>
+      </button>
+    </div>
   </section>
 </template>
 
 <script>
+import MediaService from "../services/MediaService";
+import { setTimeout } from "timers";
+
 export default {
   data() {
     return {
-      videElement: null,
-      options: { mimeType: "video/webm;codecs=vp9" },
-      mediaRecorder: null,
-      recordedBlobs: [],
-      mediaSource: null,
-      sourceBuffer: null
+      videoElement: null,
+      canvasElement: null,
+      isRecording: false,
+      recorder: null,
+      video: null,
+      isFinished: false
     };
   },
   mounted() {
-    this.mediaSource = new MediaSource();
-    this.mediaSource.addEventListener("sourceopen", this.handleSourceOpen, false);
     this.videoElement = this.$refs.videoRec;
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then(this.gotStream)
-      .catch(this.handleError);
+    this.resetVideo();
   },
   methods: {
-    handleSourceOpen(event) {
-      console.log("MediaSource opened");
-      this.sourceBuffer = this.mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
-      console.log("Source buffer: ", this.sourceBuffer);
-    },
-    handleRecord() {
-      if (recordButton.textContent === "Start Recording") {
-        startRecording();
-      } else {
-        stopRecording();
-        recordButton.textContent = "Start Recording";
-        playButton.disabled = false;
-        downloadButton.disabled = false;
-      }
-    },
-    startRecording() {
-      // this.handleErrors();
-      try {
-        this.mediaRecorder = new MediaRecorder(window.stream, this.options);
-      } catch (e) {
-        console.error("Exception while creating MediaRecorder:", e);
-        return;
-      }
-      console.log("Created this.mediaRecorder", this.mediaRecorder);
-      this.mediaRecorder.onstop = event => {
-        console.log("Recorder stopped: ", event);
-      };
-      this.mediaRecorder.ondataavailable = this.handleDataAvailable;
-      this.mediaRecorder.start(10); // collect 10ms of data
-    },
-    handleErrors() {
-      if (!this.mediaRecorder.isTypeSupported(this.options.mimeType)) {
-        console.error(`${options.mimeType} is not Supported`);
-        this.options = { mimeType: "video/webm;codecs=vp8" };
-        if (!this.mediaRecorder.isTypeSupported(this.options.mimeType)) {
-          console.error(`${this.options.mimeType} is not Supported`);
-          errorMsgElement.innerHTML = `${
-            this.options.mimeType
-          } is not Supported`;
-          this.options = { mimeType: "video/webm" };
-          if (!this.mediaRecorder.isTypeSupported(this.options.mimeType)) {
-            errorMsgElement.innerHTML = `${
-              this.options.mimeType
-            } is not Supported`;
-            this.options = { mimeType: "" };
+    resetVideo() {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: {
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
           }
-        }
-      }
+        })
+        .then(this.gotStream)
+        .catch(this.handleError);
+        this.isFinished = false;
     },
-    handleSuccess(stream) {
-      window.stream = stream;
-
-      const gumVideo = document.querySelector("video#gum");
-      gumVideo.srcObject = stream;
+    record() {
+      this.recorder.start();
+      this.isRecording = true;
     },
-    stopRecording() {
-      this.mediaRecorder.stop();
-      console.log("Recorded Blobs: ", this.recordedBlobs);
-      this.$refs.videoPlay.srcObject = this.sourceBuffer;
+    stop() {
+      this.isRecording = false;
+      this.recorder.stop();
+      this.isFinished = true;
     },
-    handleDataAvailable(event) {
-      if (event.data && event.data.size > 0) {
-        this.recordedBlobs.push(event.data);
-      }
+    onDataAvailable(ev) {
+      this.$refs.videoPlay.src = URL.createObjectURL(ev.data);
     },
-    gotStream(stream) {
-      window.stream = stream;
-      this.videoElement.srcObject = stream;
+    gotStream(mediaStream) {
+      this.recorder = new MediaRecorder(mediaStream);
+      this.recorder.ondataavailable = this.onDataAvailable;
+      this.videoElement.srcObject = mediaStream;
     },
     handleError(error) {
       console.error("Error: ", error);
@@ -119,14 +87,18 @@ export default {
     padding: 5px 8px;
     font-size: 30px;
     border-radius: 50%;
-  }
-  .rec {
-    color: #fff;
-    background-color: rgb(65, 65, 65);
-  }
-  .stop {
-    color: rgb(65, 65, 65);
     background-color: #fff;
+    color: red;
+  }
+  .camera,
+  .preview {
+    object-fit: fill;
+  }
+  .camera {
+    border: 1px solid red;
+    width: 500px;
+    transform: scaleX(-1);
+    filter: FlipH;
   }
 }
 </style>
