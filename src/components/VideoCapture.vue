@@ -23,7 +23,6 @@
 
 <script>
 import MediaService from "../services/MediaService";
-import { setTimeout } from "timers";
 
 export default {
   data() {
@@ -37,21 +36,21 @@ export default {
     };
   },
   mounted() {
-    this.videoElement = this.$refs.videoRec;
     this.resetVideo();
   },
   methods: {
     resetVideo() {
+      this.isFinished = false;
       navigator.mediaDevices
         .getUserMedia({
           video: {
             width: { ideal: 1280 },
             height: { ideal: 720 }
-          }
+          },
+          audio: true
         })
         .then(this.gotStream)
         .catch(this.handleError);
-        this.isFinished = false;
     },
     record() {
       this.recorder.start();
@@ -62,12 +61,17 @@ export default {
       this.recorder.stop();
       this.isFinished = true;
     },
+    done(){
+      this.$emit('done', this.video)
+    },
     onDataAvailable(ev) {
-      this.$refs.videoPlay.src = URL.createObjectURL(ev.data);
+      this.video = URL.createObjectURL(ev.data)
+      this.$refs.videoPlay.src = this.video;
     },
     gotStream(mediaStream) {
       this.recorder = new MediaRecorder(mediaStream);
       this.recorder.ondataavailable = this.onDataAvailable;
+      this.videoElement = this.$refs.videoRec;
       this.videoElement.srcObject = mediaStream;
     },
     handleError(error) {
@@ -82,6 +86,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  .stream-container {
+    display: flex;
+    flex-direction: column;
+  }
   .btn {
     margin: 10px auto;
     padding: 5px 8px;
