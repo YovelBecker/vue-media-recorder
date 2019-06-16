@@ -10,7 +10,7 @@
       </button>
     </div>
     <div v-if="isFinished">
-      <video ref="videoPlay" class="camera" loop autoplay></video>
+      <video ref="videoPlay" class="camera" controls loop autoplay></video>
       <button type="button" class="btn-capture" @click.prevent="resetVideo">
         <i class="fas fa-undo-alt"></i>
       </button>
