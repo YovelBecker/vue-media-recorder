@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import MediaService from "../services/MediaService";
-
 export default {
   data() {
     return {
@@ -74,9 +72,6 @@ export default {
       this.videoElement = this.$refs.videoRec;
       this.videoElement.srcObject = mediaStream;
     },
-    handleError(error) {
-      console.error("Error: ", error);
-    }
   }
 };
 </script>
