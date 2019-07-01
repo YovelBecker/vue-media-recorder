@@ -1,7 +1,7 @@
 <template>
   <section class="video-cap-container">
-    <div v-if="!isFinished" class="stream-container">
-      <video ref="videoRec" class="camera" autoplay></video>
+    <div class="stream-container">
+      <video ref="videoRec" class="camera" loop controls autoplay></video>
       <button v-if="!isRecording" @click="record" class="btn">
         <i class="fas fa-circle"></i>
       </button>
@@ -10,7 +10,6 @@
       </button>
     </div>
     <div v-if="isFinished">
-      <video ref="videoPlay" class="camera" controls loop autoplay></video>
       <button type="button" class="btn-capture" @click.prevent="resetVideo">
         <i class="fas fa-undo-alt"></i>
       </button>
@@ -30,8 +29,14 @@ export default {
       isRecording: false,
       recorder: null,
       video: null,
-      isFinished: false
+      isFinished: false,
+      connection: null,
+      fileName: null,
+      videoUrl: null,
     };
+  },
+  created() {
+    this.getWebSocket();
   },
   mounted() {
     this.resetVideo();
@@ -39,6 +44,7 @@ export default {
   methods: {
     resetVideo() {
       this.isFinished = false;
+      this.isRecording = false;
       navigator.mediaDevices
         .getUserMedia({
           video: {
@@ -55,23 +61,56 @@ export default {
       this.isRecording = true;
     },
     stop() {
-      this.isRecording = false;
       this.recorder.stop();
+      this.isRecording = false;
+      // setTimeout(() => {
       this.isFinished = true;
-    },
-    done(){
-      this.$emit('done', this.video)
+      this.connection.send("DONE");
+      //   this.updateVideoFile();
+      // }, 1000);
     },
     onDataAvailable(ev) {
-      this.video = URL.createObjectURL(ev.data)
+      this.video = URL.createObjectURL(ev.data);
       this.$refs.videoPlay.src = this.video;
     },
     gotStream(mediaStream) {
-      this.recorder = new MediaRecorder(mediaStream);
-      this.recorder.ondataavailable = this.onDataAvailable;
-      this.videoElement = this.$refs.videoRec;
-      this.videoElement.srcObject = mediaStream;
+      this.recorder = new MediaRecorder(mediaStream, {
+        mimeType: "video/webm",
+        audioBitsPerSecond: 128000
+      });
+      this.recorder.ondataavailable = this.videoDataHandler;
+      this.$refs.videoRec.src = null;
+      this.$refs.videoRec.srcObject = mediaStream;
+      this.toggleVideo();
     },
+    videoDataHandler(event) {
+      let reader = new FileReader();
+      reader.readAsArrayBuffer(event.data);
+      reader.onloadend = () => {
+        this.connection.send(reader.result);
+      };
+    },
+    getWebSocket() {
+      var websocketEndpoint = "ws://localhost:3000";
+      // var websocketEndpoint = "wss://puki.ninja";
+      this.connection = new WebSocket(websocketEndpoint);
+      this.connection.binaryType = "arraybuffer";
+      this.connection.onmessage = message => {
+        this.fileName = message.data;
+        this.updateVideoFile();
+      };
+    },
+    updateVideoFile() {
+      this.videoUrl = "http://localhost:3000/uploads/" + this.fileName + ".webm";
+      // this.videoUrl = "https://puki.ninja/uploads/" + this.fileName + ".webm";
+      this.toggleVideo();
+      this.$refs.videoRec.srcObject = null;
+      this.$refs.videoRec.src = this.videoUrl;
+    },
+    toggleVideo() {
+      this.$refs.videoRec.loop = !this.$refs.videoRec.loop;
+      this.$refs.videoRec.controls = !this.$refs.videoRec.controls;
+    }
   }
 };
 </script>
