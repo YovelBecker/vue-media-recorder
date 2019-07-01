@@ -24,24 +24,21 @@
 export default {
   data() {
     return {
-      videoElement: null,
-      canvasElement: null,
-      isRecording: false,
-      recorder: null,
-      video: null,
-      isFinished: false,
-      connection: null,
-      fileName: null,
-      videoUrl: null,
+      isRecording: false, // recording mode identifier
+      isFinished: false, // finished recording - action buttons indicator
+      recorder: null, // component wide MediaRecorder
+      connection: null, // component wide WebSocket
+      videoUrl: null // link to video - assigned when done writing video file
     };
   },
   created() {
-    this.getWebSocket();
+    this.getWebSocket(); // initialize connection to WebSocket
   },
   mounted() {
     this.resetVideo();
   },
   methods: {
+    // reset video display with media device media stream
     resetVideo() {
       this.isFinished = false;
       this.isRecording = false;
@@ -56,23 +53,24 @@ export default {
         .then(this.gotStream)
         .catch(this.handleError);
     },
+    // start recoording
     record() {
       this.recorder.start();
       this.isRecording = true;
     },
+    // stop recording
     stop() {
       this.recorder.stop();
       this.isRecording = false;
-      // setTimeout(() => {
       this.isFinished = true;
       this.connection.send("DONE");
-      //   this.updateVideoFile();
-      // }, 1000);
     },
-    onDataAvailable(ev) {
-      this.video = URL.createObjectURL(ev.data);
-      this.$refs.videoPlay.src = this.video;
+    // reset video diaply and emit video file url
+    done() {
+      this.resetVideo();
+      this.$emit("done", this.videoUrl);
     },
+    // initialize MediaRecorder and video element source
     gotStream(mediaStream) {
       this.recorder = new MediaRecorder(mediaStream, {
         mimeType: "video/webm",
@@ -83,6 +81,7 @@ export default {
       this.$refs.videoRec.srcObject = mediaStream;
       this.toggleVideo();
     },
+    // handle sending data for writing using the given WebSocket
     videoDataHandler(event) {
       let reader = new FileReader();
       reader.readAsArrayBuffer(event.data);
@@ -90,23 +89,26 @@ export default {
         this.connection.send(reader.result);
       };
     },
+    // initialize WebSocket
     getWebSocket() {
       var websocketEndpoint = "ws://localhost:3000";
       // var websocketEndpoint = "wss://puki.ninja";
       this.connection = new WebSocket(websocketEndpoint);
       this.connection.binaryType = "arraybuffer";
       this.connection.onmessage = message => {
-        this.fileName = message.data;
-        this.updateVideoFile();
+        this.updateVideoFile(message.data);
       };
     },
-    updateVideoFile() {
-      this.videoUrl = "http://localhost:3000/uploads/" + this.fileName + ".webm";
-      // this.videoUrl = "https://puki.ninja/uploads/" + this.fileName + ".webm";
+    // update video when file written
+    updateVideoFile(fileName) {
+      this.videoUrl =
+        "http://localhost:3000/uploads/" + fileName + ".webm";
+      // this.videoUrl = "https://puki.ninja/uploads/" + fileName + ".webm";
       this.toggleVideo();
       this.$refs.videoRec.srcObject = null;
       this.$refs.videoRec.src = this.videoUrl;
     },
+    // toggle video display
     toggleVideo() {
       this.$refs.videoRec.loop = !this.$refs.videoRec.loop;
       this.$refs.videoRec.controls = !this.$refs.videoRec.controls;

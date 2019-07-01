@@ -1,6 +1,6 @@
 <template>
   <section class="video-rec-container">
-      <video-capture />
+      <video-capture @done="test"/>
   </section>
 </template>
 
@@ -10,7 +10,12 @@ import VideoCapture from "../components/VideoCapture";
 export default {
   components: {
     VideoCapture
-  }
+  },
+  methods: {
+    test(videoUrl){
+      console.log(videoUrl)
+    }
+  },
 };
 </script>
 
