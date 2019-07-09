@@ -1,29 +1,40 @@
 <template>
-  <section class="video-cap-container">
-    <div class="stream-container">
-      <video ref="videoRec" class="camera" loop controls autoplay></video>
-      <button v-if="!isRecording" @click="record" class="btn">
-        <i class="fas fa-circle"></i>
-      </button>
-      <button v-else @click="stop" class="btn">
-        <i class="far fa-circle"></i>
-      </button>
-    </div>
-    <div v-if="isFinished">
-      <button type="button" class="btn-capture" @click.prevent="resetVideo">
-        <i class="fas fa-undo-alt"></i>
-      </button>
-      <button type="button" class="btn-capture" @click.prevent="done">
-        <i class="fas fa-thumbs-up"></i>
-      </button>
-    </div>
+  <section>
+    <Loader v-show="isUploading" />
+    <section v-show="!isUploading" class="video-cap-container">
+      <div class="stream-container">
+        <video ref="videoRec" class="camera" loop controls autoplay></video>
+        <template v-if="!isFinished">
+        <button v-if="!isRecording" @click="record" class="btn">
+          <i class="fas fa-circle"></i>
+        </button>
+        <button v-else @click="stop" class="btn">
+          <i class="far fa-circle"></i>
+        </button>
+        </template>
+      </div>
+      <div v-if="isFinished">
+        <button type="button" class="btn-capture" @click.prevent="resetVideo">
+          <i class="fas fa-undo-alt"></i>
+        </button>
+        <button type="button" class="btn-capture" @click.prevent="done">
+          <i class="fas fa-thumbs-up"></i>
+        </button>
+      </div>
+    </section>
   </section>
 </template>
 
 <script>
+import Loader from './Loader'
+
 export default {
+  components:{
+    Loader
+  },
   data() {
     return {
+      isUploading: false,
       isRecording: false, // recording mode identifier
       isFinished: false, // finished recording - action buttons indicator
       recorder: null, // component wide MediaRecorder
@@ -83,6 +94,7 @@ export default {
     },
     // handle sending data for writing using the given WebSocket
     videoDataHandler(event) {
+      this.isUploading = true;
       let reader = new FileReader();
       reader.readAsArrayBuffer(event.data);
       reader.onloadend = () => {
@@ -91,8 +103,8 @@ export default {
     },
     // initialize WebSocket
     getWebSocket() {
-      var websocketEndpoint = "ws://localhost:3000";
-      // var websocketEndpoint = "wss://puki.ninja";
+      // var websocketEndpoint = "ws://localhost:3000";
+      var websocketEndpoint = "wss://puki.ninja";
       this.connection = new WebSocket(websocketEndpoint);
       this.connection.binaryType = "arraybuffer";
       this.connection.onmessage = message => {
@@ -101,12 +113,12 @@ export default {
     },
     // update video when file written
     updateVideoFile(fileName) {
-      this.videoUrl =
-        "http://localhost:3000/uploads/" + fileName + ".webm";
-      // this.videoUrl = "https://puki.ninja/uploads/" + fileName + ".webm";
+      // this.videoUrl = "http://localhost:3000/uploads/" + fileName + ".webm";
+      this.videoUrl = "https://puki.ninja/uploads/" + fileName + ".webm";
       this.toggleVideo();
       this.$refs.videoRec.srcObject = null;
       this.$refs.videoRec.src = this.videoUrl;
+      this.isUploading = false;
     },
     // toggle video display
     toggleVideo() {
@@ -139,7 +151,6 @@ export default {
     object-fit: fill;
   }
   .camera {
-    border: 1px solid red;
     width: 500px;
     transform: scaleX(-1);
     filter: FlipH;

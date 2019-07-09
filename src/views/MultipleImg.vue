@@ -1,25 +1,6 @@
 <template>
   <section class="home">
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
-    <PhotoCapture />
+    <PhotoCapture  v-for="n in 32" :key="n"/>
   </section>
 </template>
 
@@ -37,7 +18,6 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  border: 1px solid red;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

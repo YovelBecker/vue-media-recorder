@@ -90,7 +90,7 @@ export default {
 
 <style lang="scss" scoped>
 .photo-capture {
-  border:1px solid blue;
+  border:1px solid rgb(61, 61, 61);
   width: 260px;
   .camera,
   .preview {
