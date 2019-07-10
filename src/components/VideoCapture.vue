@@ -5,19 +5,19 @@
       <div class="stream-container">
         <video ref="videoRec" class="camera" loop controls autoplay></video>
         <template v-if="!isFinished">
-        <button v-if="!isRecording" @click="record" class="btn">
-          <i class="fas fa-circle"></i>
-        </button>
-        <button v-else @click="stop" class="btn">
-          <i class="far fa-circle"></i>
-        </button>
+          <button v-if="!isRecording" @click="record" class="btn">
+            <i class="fas fa-circle"></i>
+          </button>
+          <button v-else @click="stop" class="btn">
+            <i class="far fa-circle"></i>
+          </button>
         </template>
       </div>
-      <div v-if="isFinished">
-        <button type="button" class="btn-capture" @click.prevent="resetVideo">
+      <div class="controls" v-if="isFinished">
+        <button type="button" class="btn" @click.prevent="resetVideo">
           <i class="fas fa-undo-alt"></i>
         </button>
-        <button type="button" class="btn-capture" @click.prevent="done">
+        <button type="button" class="btn" @click.prevent="done">
           <i class="fas fa-thumbs-up"></i>
         </button>
       </div>
@@ -26,10 +26,10 @@
 </template>
 
 <script>
-import Loader from './Loader'
+import Loader from "./Loader";
 
 export default {
-  components:{
+  components: {
     Loader
   },
   data() {
@@ -137,14 +137,14 @@ export default {
   .stream-container {
     display: flex;
     flex-direction: column;
+    .btn {
+      margin: 10px auto;
+    }
   }
-  .btn {
-    margin: 10px auto;
-    padding: 5px 8px;
-    font-size: 30px;
-    border-radius: 50%;
-    background-color: #fff;
-    color: red;
+  .controls{
+    .btn{
+      margin: 0 10px;
+    }
   }
   .camera,
   .preview {

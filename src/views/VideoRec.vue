@@ -1,6 +1,6 @@
 <template>
   <section class="video-rec-container">
-      <video-capture @done="test"/>
+      <video-capture @done="getUrl"/>
       <div v-if="videoUrl" class="video-url-containe">
         <h1>Your Video URL</h1>
         <a :href="videoUrl"><h1>Your Video Is Ready!</h1></a>
@@ -23,13 +23,15 @@ export default {
     }
   },
   methods: {
-    test(videoUrl){
+    getUrl(videoUrl){
       this.videoUrl = videoUrl
-      console.log(this.videoUrl)
     }
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+a{
+  color:#049161;
+}
 </style>

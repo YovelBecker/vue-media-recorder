@@ -1,8 +1,8 @@
 <template>
   <section class="single-video">
-    <PhotoCapture :isSingle="true" @done="handleDone"/>
+    <PhotoCapture :isSingle="true" @done="handleDone" />
     <div v-if="imgs.length" class="thumbnails">
-      <img v-for="(imgSrc, idx) in imgs" :key="idx" :src="imgSrc" alt="">
+      <img v-for="(imgSrc, idx) in imgs" :key="idx" :src="imgSrc" alt />
     </div>
   </section>
 </template>
@@ -18,37 +18,40 @@ export default {
   },
   data() {
     return {
-      imgs:[]
-    }
+      imgs: []
+    };
   },
-  created(){
-    this.imgs = JSON.parse(localStorage.getItem('thumbnails'))
-    if(!this.imgs) this.imgs = []
+  created() {
+    this.imgs = JSON.parse(localStorage.getItem("thumbnails"));
+    if (!this.imgs) this.imgs = [];
   },
   methods: {
     handleDone(imgBase64) {
-      this.imgs.push(imgBase64)
-      localStorage.setItem('thumbnails',JSON.stringify(this.imgs))
-    },
+      this.imgs.push(imgBase64);
+      localStorage.setItem("thumbnails", JSON.stringify(this.imgs));
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .single-video {
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
-  .thumbnails{
-    width:530px;
-    display:flex;
+  .thumbnails {
+    width: 100%;
+    display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    img{
-      width:260px;
+    justify-content: center;
+    @media screen and (min-width: 600px) {
+      justify-content: space-around;
+    }
+    img {
+      width: 260px;
       height: 200px;
+      margin-bottom: 15px;
     }
   }
 }

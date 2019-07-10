@@ -3,14 +3,14 @@
     <video v-show="showVideo" ref="player" class="camera" autoplay playsinline></video>
     <canvas v-show="!showVideo" class="preview" ref="canvas"></canvas>
     <div v-if="isSingle" class="center photo-capture-actions">
-      <button type="button" class="btn-capture" @click.prevent="capture" v-if="showVideo">
+      <button type="button" class="btn" @click.prevent="capture" v-if="showVideo">
         <i class="fas fa-camera"></i>
       </button>
       <div v-else>
-        <button type="button" class="btn-capture" @click.prevent="cancel">
+        <button type="button" class="btn" @click.prevent="cancel">
           <i class="fas fa-undo-alt"></i>
         </button>
-        <button type="button" class="btn-capture" @click.prevent="done">
+        <button type="button" class="btn" @click.prevent="done">
           <i class="fas fa-thumbs-up"></i>
         </button>
       </div>
@@ -90,7 +90,6 @@ export default {
 
 <style lang="scss" scoped>
 .photo-capture {
-  border:1px solid rgb(61, 61, 61);
   width: 260px;
   .camera,
   .preview {
