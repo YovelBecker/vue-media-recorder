@@ -1,8 +1,8 @@
-# img-vid-proj
+# Vue Video and Image Capture Component
 
-## Project setup
+## Description
 ```
-npm install
+
 ```
 
 ### Compiles and hot-reloads for development
