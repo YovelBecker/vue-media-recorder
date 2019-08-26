@@ -1,29 +1,36 @@
-body {
+.video-cap-container {
   background-color: rgb(65, 65, 65);
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #6a94bd;
-    &.router-link-exact-active {
-      color: #42b983;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .stream-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .controls {
+    .btn {
+      margin: 0 10px;
     }
+  }
+  .camera,
+  .preview {
+    object-fit: fill;
+  }
+  .camera {
+    width: 500px;
+    transform: scaleX(-1);
+    filter: FlipH;
   }
 }
 
 .btn {
+  margin-top: 10px;
   background-color: #34495e;
   color: #049161;
   margin: 0 10px;
-  width: 65px;
+  min-width: 65px;
   height: 65px;
-  font-size: 30px;
   border: none;
   border-radius: 50%;
 }

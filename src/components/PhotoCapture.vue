@@ -1,17 +1,20 @@
 <template>
-  <section class="photo-capture">
+  <section :style="styling" v-if="isValid" class="photo-capture">
     <video v-show="showVideo" ref="player" class="camera" autoplay playsinline></video>
     <canvas v-show="!showVideo" class="preview" ref="canvas"></canvas>
     <div v-if="isSingle" class="center photo-capture-actions">
       <button type="button" class="btn" @click.prevent="capture" v-if="showVideo">
-        <i class="fas fa-camera"></i>
+        <!-- <i class="fas fa-camera"></i> -->
+        <h2>Capture</h2>
       </button>
       <div v-else>
         <button type="button" class="btn" @click.prevent="cancel">
-          <i class="fas fa-undo-alt"></i>
+          <!-- <i class="fas fa-undo-alt"></i> -->
+          <h2>Cancel</h2>
         </button>
         <button type="button" class="btn" @click.prevent="done">
-          <i class="fas fa-thumbs-up"></i>
+          <!-- <i class="fas fa-thumbs-up"></i> -->
+          <h2>OK</h2>
         </button>
       </div>
     </div>
@@ -25,16 +28,22 @@ const EVENTS = {
 };
 
 export default {
-  props:{
+  name: "PhotoCapture",
+  props: {
     isSingle: {
       type: Boolean,
       default: false
     },
+    styling: {
+      type: Object,
+      isRequired: false
+    }
   },
   data() {
     return {
       showVideo: true,
-      picture: null
+      picture: null,
+      isValid: true
     };
   },
   mounted() {
@@ -50,8 +59,8 @@ export default {
       navigator.mediaDevices
         .getUserMedia({ video: true })
         .then(stream => (this.videoPlayer.srcObject = stream))
-        .catch(err => {
-          console.error("could not open the camera", err);
+        .catch(() => {
+          this.isValid = false;
         });
     },
     capture() {
@@ -90,9 +99,18 @@ export default {
 
 <style lang="scss" scoped>
 .photo-capture {
-  width: 260px;
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  // height: 300px;
+  // background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   .camera,
   .preview {
+    margin: 10px;
     width: 100%;
     object-fit: fill;
   }
@@ -100,5 +118,16 @@ export default {
     transform: scaleX(-1);
     filter: FlipH;
   }
+  .btn {
+  margin-top: 10px;
+  background-color: #34495e;
+  color: #049161;
+  margin: 0 10px;
+  min-width: 65px;
+  height: 65px;
+  border: none;
+  border-radius: 50%;
+}
+
 }
 </style>

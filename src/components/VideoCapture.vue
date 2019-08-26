@@ -1,24 +1,26 @@
 <template>
-  <section>
-    <Loader v-show="isUploading" />
+  <section v-if="isValid">
     <section v-show="!isUploading" class="video-cap-container">
       <div class="stream-container">
         <video ref="videoRec" class="camera" loop controls autoplay></video>
         <template v-if="!isFinished">
           <button v-if="!isRecording" @click="record" class="btn">
-            <i class="fas fa-circle"></i>
+            <!-- <i class="fas fa-circle"></i> -->
+            <span style="font-size:3em;">⬤</span>
           </button>
           <button v-else @click="stop" class="btn">
-            <i class="far fa-circle"></i>
+            <span style="font-size:1em;">◼</span>
           </button>
         </template>
       </div>
       <div class="controls" v-if="isFinished">
         <button type="button" class="btn" @click.prevent="resetVideo">
-          <i class="fas fa-undo-alt"></i>
+          <h2>Cancel</h2>
+          <!-- <i class="fas fa-undo-alt"></i> -->
         </button>
         <button type="button" class="btn" @click.prevent="done">
-          <i class="fas fa-thumbs-up"></i>
+          <h2>OK</h2>
+          <!-- <i class="fas fa-thumbs-up"></i> -->
         </button>
       </div>
     </section>
@@ -26,14 +28,16 @@
 </template>
 
 <script>
-import Loader from "./Loader";
+// import '../assets/scss/video-capture.scss'
 
 export default {
+  name: "VideoCapture",
   components: {
-    Loader
+    // Loader
   },
   data() {
     return {
+      isValid: true,
       isUploading: false,
       isRecording: false, // recording mode identifier
       isFinished: false, // finished recording - action buttons indicator
@@ -62,7 +66,7 @@ export default {
           audio: true
         })
         .then(this.gotStream)
-        .catch(this.handleError);
+        .catch(() => (this.isValid = false));
     },
     // start recoording
     record() {
@@ -131,21 +135,32 @@ export default {
 
 <style lang="scss" scoped>
 .video-cap-container {
+  background-color: rgb(65, 65, 65);
   display: flex;
   flex-direction: column;
   align-items: center;
   .stream-container {
     display: flex;
     flex-direction: column;
-    .btn {
-      margin: 10px auto;
-    }
+    align-items: center;
   }
-  .controls{
-    .btn{
+  .controls {
+    .btn {
       margin: 0 10px;
     }
   }
+  .btn {
+    margin-top: 10px;
+    background-color: #34495e;
+    color: #049161;
+    margin: 0 10px;
+    width: 65px;
+    height: 65px;
+    // font-size: 30px;
+    border: none;
+    border-radius: 50%;
+  }
+
   .camera,
   .preview {
     object-fit: fill;
