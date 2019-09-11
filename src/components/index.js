@@ -1,12 +1,10 @@
 // import Vue from "vue";
 import PhotoCapture from "./PhotoCapture.vue";
 import VideoCapture from "./VideoCapture.vue";
-import Loader from './Loader.vue'
 
 export {
     PhotoCapture,
-    VideoCapture,
-    Loader
+    VideoCapture
 };
 
 // Object.keys(Components).forEach(name => {
