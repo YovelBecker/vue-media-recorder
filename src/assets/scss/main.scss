@@ -9,8 +9,9 @@
     align-items: center;
   }
   .controls {
+    margin: 10px;
     .btn {
-      margin: 0 10px;
+      margin: 10px;
     }
   }
   .camera,
@@ -28,9 +29,59 @@
   margin-top: 10px;
   background-color: #34495e;
   color: #049161;
-  margin: 0 10px;
+  margin: 10px;
   min-width: 65px;
   height: 65px;
   border: none;
   border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    background-color: #5c81a7;
+    color: white;
+  }
+  .fas {
+    font-size: 25px;
+  }
+}
+
+.photo-capture {
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  // height: 300px;
+  // background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  .camera,
+  .preview {
+    margin: 10px;
+    width: 100%;
+    object-fit: fill;
+  }
+  .camera {
+    transform: scaleX(-1);
+    filter: FlipH;
+  }
+}
+
+.loader {
+  margin: 0 auto;
+  border: 16px solid #34495e; /* Light grey */
+  border-top: 16px solid #41b883; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

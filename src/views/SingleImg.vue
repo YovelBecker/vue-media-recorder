@@ -1,6 +1,6 @@
 <template>
   <section class="single-video">
-    <PhotoCapture :isSingle="true" @done="handleDone" />
+    <PhotoCapture v-model="imgBase64" />
     <div v-if="imgs.length" class="thumbnails">
       <button @click="clear" class="btn">CLEAR</button>
       <img v-for="(imgSrc, idx) in imgs" :key="idx" :src="imgSrc" alt />
@@ -19,7 +19,8 @@ export default {
   },
   data() {
     return {
-      imgs: []
+      imgs: [],
+      imgBase64: null
     };
   },
   created() {
@@ -31,9 +32,14 @@ export default {
       this.imgs.push(imgBase64);
       localStorage.setItem("thumbnails", JSON.stringify(this.imgs));
     },
-    clear(){
+    clear() {
       localStorage.clear()
       this.imgs = []
+    }
+  },
+  watch: {
+    imgBase64() {
+      this.handleDone(this.imgBase64)
     }
   }
 };
@@ -45,7 +51,7 @@ export default {
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
-  background-color: rgb(65,65,65);
+  background-color: rgb(65, 65, 65);
   .thumbnails {
     width: 100%;
     display: flex;
