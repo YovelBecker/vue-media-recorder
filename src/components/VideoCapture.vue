@@ -4,8 +4,9 @@
       <div v-show="!isUploading" class="stream-container">
         <video ref="videoRec" class="camera" loop controls autoplay></video>
         <template v-if="!isFinished">
-          <button v-if="!isRecording" @click="record" class="btn">
-            <i class="fas fa-circle" />
+          <button v-if="!isRecording" @click="record" class="btn flex-center">
+            Record
+            <!-- <i class="fas fa-circle" /> -->
           </button>
           <button v-else @click="stop" class="btn">
             <span style="font-size:3em;">◼</span>
@@ -15,10 +16,12 @@
       <Loader v-show="isUploading" />
       <div class="controls" v-if="isFinished && !isUploading">
         <button type="button" class="btn" @click.prevent="resetVideo">
-          <i class="fas fa-undo-alt" />
+          Cancel
+          <!-- <i class="fas fa-undo-alt" /> -->
         </button>
         <button type="button" class="btn" @click.prevent="done">
-          <i class="fas fa-check" />
+          OK
+          <!-- <i class="fas fa-check" /> -->
         </button>
       </div>
       <h1 class="error-video">{{errText}}</h1>

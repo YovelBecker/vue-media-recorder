@@ -3,15 +3,18 @@
     <video v-show="showVideo" ref="player" class="camera" autoplay playsinline></video>
     <canvas v-show="!showVideo" class="preview" ref="canvas"></canvas>
     <div class="center photo-capture-actions">
-      <button type="button" class="btn" @click.prevent="capture" v-if="showVideo">
-        <i class="fas fa-camera" />
+      <button type="button" class="btn flex-center" @click.prevent="capture" v-if="showVideo">
+        Capture
+        <!-- <i class="fas fa-camera" /> -->
       </button>
       <div v-else>
         <button type="button" class="btn" @click.prevent="cancel">
-          <i class="fas fa-undo-alt" />
+          Cancel
+          <!-- <i class="fas fa-undo-alt" /> -->
         </button>
         <button type="button" class="btn" @click.prevent="done">
-          <i class="fas fa-check" />
+          OK
+          <!-- <i class="fas fa-check" /> -->
         </button>
       </div>
     </div>

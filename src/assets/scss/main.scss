@@ -30,6 +30,12 @@
   }
 }
 
+.flex-center{
+  display:flex;
+  justify-content: center;
+  align-items: center
+}
+
 .btn {
   margin-top: 10px;
   background-color: #34495e;
