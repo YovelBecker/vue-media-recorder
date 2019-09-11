@@ -1,7 +1,7 @@
 <template>
   <section v-if="isValid">
-    <section v-show="!isUploading" class="video-cap-container">
-      <div class="stream-container">
+    <section class="video-cap-container">
+      <div v-show="!isUploading" class="stream-container">
         <video ref="videoRec" class="camera" loop controls autoplay></video>
         <template v-if="!isFinished">
           <button v-if="!isRecording" @click="record" class="btn">
@@ -12,7 +12,8 @@
           </button>
         </template>
       </div>
-      <div class="controls" v-if="isFinished">
+      <Loader v-show="isUploading" />
+      <div class="controls" v-if="isFinished && !isUploading">
         <button type="button" class="btn" @click.prevent="resetVideo">
           <i class="fas fa-undo-alt" />
         </button>
@@ -20,21 +21,29 @@
           <i class="fas fa-check" />
         </button>
       </div>
+      <h1 class="error-video">{{errText}}</h1>
     </section>
   </section>
 </template>
 
 <script>
-
+import Loader from './Loader.vue'
 export default {
   name: "VideoCapture",
   props: {
     value: {
       default: null
+    },
+    uplodeUrl: {
+      default: null
     }
+  },
+  components: {
+    Loader
   },
   data() {
     return {
+      errText: null,
       isValid: true,
       isUploading: false,
       isRecording: false, // recording mode identifier
@@ -45,6 +54,7 @@ export default {
     };
   },
   created() {
+    if (!this.uplodeUrl) this.errText = 'There is no upload url available'
     this.getWebSocket(); // initialize connection to WebSocket
   },
   mounted() {
@@ -55,6 +65,7 @@ export default {
     resetVideo() {
       this.isFinished = false;
       this.isRecording = false;
+      this.isLoading = true;
       navigator.mediaDevices
         .getUserMedia({
           video: {
@@ -68,15 +79,16 @@ export default {
     },
     // start recoording
     record() {
+      if (!this.uplodeUrl) return;
       this.recorder.start();
       this.isRecording = true;
     },
     // stop recording
     stop() {
-      this.recorder.stop();
+      this.recorder.stop()
       this.isRecording = false;
       this.isFinished = true;
-      this.connection.send("DONE");
+      this.connection.send("DONE")
     },
     // reset video diaply and emit video file url
     done() {
@@ -115,8 +127,7 @@ export default {
     },
     // update video when file written
     updateVideoFile(fileName) {
-      // this.videoUrl = "http://localhost:3000/uploads/" + fileName + ".webm";
-      this.videoUrl = "https://puki.ninja/uploads/" + fileName + ".webm";
+      this.videoUrl = this.uplodeUrl + fileName + ".webm";
       this.toggleVideo();
       this.$refs.videoRec.srcObject = null;
       this.$refs.videoRec.src = this.videoUrl;
