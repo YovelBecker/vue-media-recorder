@@ -2,19 +2,16 @@
   <section :style="styling" v-if="isValid" class="photo-capture">
     <video v-show="showVideo" ref="player" class="camera" autoplay playsinline></video>
     <canvas v-show="!showVideo" class="preview" ref="canvas"></canvas>
-    <div v-if="isSingle" class="center photo-capture-actions">
+    <div class="center photo-capture-actions">
       <button type="button" class="btn" @click.prevent="capture" v-if="showVideo">
-        <!-- <i class="fas fa-camera"></i> -->
-        <h2>Capture</h2>
+        <i class="fas fa-camera" />
       </button>
       <div v-else>
         <button type="button" class="btn" @click.prevent="cancel">
-          <!-- <i class="fas fa-undo-alt"></i> -->
-          <h2>Cancel</h2>
+          <i class="fas fa-undo-alt" />
         </button>
         <button type="button" class="btn" @click.prevent="done">
-          <!-- <i class="fas fa-thumbs-up"></i> -->
-          <h2>OK</h2>
+          <i class="fas fa-check" />
         </button>
       </div>
     </div>
@@ -22,21 +19,15 @@
 </template>
 
 <script>
-const EVENTS = {
-  ON_DONE: "done",
-  ON_CLEAR: "clear"
-};
-
 export default {
   name: "PhotoCapture",
   props: {
-    isSingle: {
-      type: Boolean,
-      default: false
-    },
     styling: {
       type: Object,
       isRequired: false
+    },
+    value: {
+      default: null
     }
   },
   data() {
@@ -78,14 +69,13 @@ export default {
       this.picture = this.$refs.canvas.toDataURL();
     },
     done() {
-      this.$emit(EVENTS.ON_DONE, this.picture);
+      this.$emit('input', this.picture );
       this.showVideo = true;
       this.streamUserMediaVideo();
     },
     cancel() {
       this.showVideo = true;
       this.streamUserMediaVideo();
-      this.$emit(EVENTS.ON_CLEAR);
     },
     stopVideoStream() {
       if (!(this.$refs.player && this.$refs.player.srcObject)) return;
@@ -97,37 +87,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.photo-capture {
-  padding: 10px;
-  margin: 10px;
-  width: 300px;
-  // height: 300px;
-  // background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  .camera,
-  .preview {
-    margin: 10px;
-    width: 100%;
-    object-fit: fill;
-  }
-  .camera {
-    transform: scaleX(-1);
-    filter: FlipH;
-  }
-  .btn {
-  margin-top: 10px;
-  background-color: #34495e;
-  color: #049161;
-  margin: 0 10px;
-  min-width: 65px;
-  height: 65px;
-  border: none;
-  border-radius: 50%;
-}
 
-}
-</style>

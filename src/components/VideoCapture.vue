@@ -5,22 +5,19 @@
         <video ref="videoRec" class="camera" loop controls autoplay></video>
         <template v-if="!isFinished">
           <button v-if="!isRecording" @click="record" class="btn">
-            <!-- <i class="fas fa-circle"></i> -->
-            <span style="font-size:3em;">⬤</span>
+            <i class="fas fa-circle" />
           </button>
           <button v-else @click="stop" class="btn">
-            <span style="font-size:1em;">◼</span>
+            <span style="font-size:3em;">◼</span>
           </button>
         </template>
       </div>
       <div class="controls" v-if="isFinished">
         <button type="button" class="btn" @click.prevent="resetVideo">
-          <h2>Cancel</h2>
-          <!-- <i class="fas fa-undo-alt"></i> -->
+          <i class="fas fa-undo-alt" />
         </button>
         <button type="button" class="btn" @click.prevent="done">
-          <h2>OK</h2>
-          <!-- <i class="fas fa-thumbs-up"></i> -->
+          <i class="fas fa-check" />
         </button>
       </div>
     </section>
@@ -28,12 +25,13 @@
 </template>
 
 <script>
-// import '../assets/scss/video-capture.scss'
 
 export default {
   name: "VideoCapture",
-  components: {
-    // Loader
+  props: {
+    value: {
+      default: null
+    }
   },
   data() {
     return {
@@ -83,7 +81,7 @@ export default {
     // reset video diaply and emit video file url
     done() {
       this.resetVideo();
-      this.$emit("done", this.videoUrl);
+      this.$emit("input", this.videoUrl);
     },
     // initialize MediaRecorder and video element source
     gotStream(mediaStream) {
@@ -133,42 +131,3 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.video-cap-container {
-  background-color: rgb(65, 65, 65);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .stream-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .controls {
-    .btn {
-      margin: 0 10px;
-    }
-  }
-  .btn {
-    margin-top: 10px;
-    background-color: #34495e;
-    color: #049161;
-    margin: 0 10px;
-    width: 65px;
-    height: 65px;
-    // font-size: 30px;
-    border: none;
-    border-radius: 50%;
-  }
-
-  .camera,
-  .preview {
-    object-fit: fill;
-  }
-  .camera {
-    width: 500px;
-    transform: scaleX(-1);
-    filter: FlipH;
-  }
-}
-</style>
