@@ -22,12 +22,7 @@ export default {
       videoUrl: null,
       uplodeUrl: "https://puki.ninja/uploads/"
     }
-  },
-  methods: {
-    getUrl(videoUrl) {
-      this.videoUrl = videoUrl
-    }
-  },
+  }
 };
 </script>
 

@@ -1,21 +1,17 @@
 <template>
   <section :style="styling" v-if="isValid" class="photo-capture">
-    <video v-show="showVideo" ref="player" class="camera" autoplay playsinline></video>
-    <canvas v-show="!showVideo" class="preview" ref="canvas"></canvas>
-    <div class="center photo-capture-actions">
-      <button type="button" class="btn flex-center" @click.prevent="capture" v-if="showVideo">
-        Capture
-        <!-- <i class="fas fa-camera" /> -->
-      </button>
+    <video v-show="showVideo" ref="player" class="camera" autoplay playsinline />
+    <canvas v-show="!showVideo" class="preview" ref="canvas" />
+    <div class="center photo-capture-actions" v-if="isSingle">
+      <button
+        type="button"
+        class="btn flex-center"
+        @click.prevent="capture"
+        v-if="showVideo"
+      >Capture</button>
       <div v-else>
-        <button type="button" class="btn" @click.prevent="cancel">
-          Cancel
-          <!-- <i class="fas fa-undo-alt" /> -->
-        </button>
-        <button type="button" class="btn" @click.prevent="done">
-          OK
-          <!-- <i class="fas fa-check" /> -->
-        </button>
+        <button type="button" class="btn" @click.prevent="cancel">Cancel</button>
+        <button type="button" class="btn" @click.prevent="done">OK</button>
       </div>
     </div>
   </section>
@@ -31,6 +27,10 @@ export default {
     },
     value: {
       default: null
+    },
+    isSingle: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -72,7 +72,7 @@ export default {
       this.picture = this.$refs.canvas.toDataURL();
     },
     done() {
-      this.$emit('input', this.picture );
+      this.$emit('input', this.picture);
       this.showVideo = true;
       this.streamUserMediaVideo();
     },

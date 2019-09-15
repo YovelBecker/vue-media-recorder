@@ -2,27 +2,18 @@
   <section v-if="isValid">
     <section class="video-cap-container">
       <div v-show="!isUploading" class="stream-container">
-        <video ref="videoRec" class="camera" loop controls autoplay></video>
+        <video ref="videoRec" class="camera" muted loop controls autoplay></video>
         <template v-if="!isFinished">
-          <button v-if="!isRecording" @click="record" class="btn flex-center">
-            Record
-            <!-- <i class="fas fa-circle" /> -->
-          </button>
+          <button v-if="!isRecording" @click="record" class="btn flex-center">Record</button>
           <button v-else @click="stop" class="btn">
             <span style="font-size:3em;">◼</span>
           </button>
         </template>
       </div>
       <Loader v-show="isUploading" />
-      <div class="controls" v-if="isFinished && !isUploading">
-        <button type="button" class="btn" @click.prevent="resetVideo">
-          Cancel
-          <!-- <i class="fas fa-undo-alt" /> -->
-        </button>
-        <button type="button" class="btn" @click.prevent="done">
-          OK
-          <!-- <i class="fas fa-check" /> -->
-        </button>
+      <div class="controls" v-if="isFinished && !isUploading && this.uplodeUrl">
+        <button type="button" class="btn" @click.prevent="resetVideo">Cancel</button>
+        <button type="button" class="btn" @click.prevent="done">OK</button>
       </div>
       <h1 class="error-video">{{errText}}</h1>
     </section>
@@ -69,6 +60,7 @@ export default {
       this.isFinished = false;
       this.isRecording = false;
       this.isLoading = true;
+      this.$refs.videoRec.muted = true;
       navigator.mediaDevices
         .getUserMedia({
           video: {
@@ -120,12 +112,12 @@ export default {
     },
     // initialize WebSocket
     getWebSocket() {
-      // var websocketEndpoint = "ws://localhost:3000";
-      var websocketEndpoint = "wss://puki.ninja";
+      const websocketEndpoint = "wss://puki.ninja";
       this.connection = new WebSocket(websocketEndpoint);
       this.connection.binaryType = "arraybuffer";
       this.connection.onmessage = message => {
         this.updateVideoFile(message.data);
+        this.$refs.videoRec.muted = false;
       };
     },
     // update video when file written

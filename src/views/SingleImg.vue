@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import PhotoCapture from "@/components/PhotoCapture.vue";
 
 export default {
