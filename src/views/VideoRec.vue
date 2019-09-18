@@ -1,6 +1,6 @@
 <template>
   <section class="video-rec-container">
-    <video-capture :uplodeUrl="uplodeUrl" v-model="videoUrl" />
+    <video-capture :uploadUrl="uploadUrl" v-model="videoUrl" />
     <div v-if="videoUrl" class="video-url-containe">
       <h1>Your Video URL</h1>
       <a :href="videoUrl">
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       videoUrl: null,
-      uplodeUrl: "https://puki.ninja/uploads/"
+      uploadUrl: "https://puki.ninja/uploads/"
     }
   }
 };

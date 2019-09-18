@@ -1,17 +1,17 @@
 <template>
   <section class="home">
-    <PhotoCapture :isSingle="false" v-for="n in 10" :key="n" />
+    <PhotoCapture :hideButtons="true" v-for="n in 10" :key="n" />
   </section>
 </template>
 
 <script>
-import PhotoCapture from "@/components/PhotoCapture.vue";
+import PhotoCapture from '../components/PhotoCapture.vue';
 
 export default {
   name: "home",
   components: {
     PhotoCapture
-  },
+  }
 };
 </script>
 

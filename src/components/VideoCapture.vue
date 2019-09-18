@@ -2,18 +2,18 @@
   <section v-if="isValid">
     <section class="video-cap-container">
       <div v-show="!isUploading" class="stream-container">
-        <video ref="videoRec" class="camera" muted loop controls autoplay></video>
+        <video ref="videoRec" class="camera" muted loop controls autoplay />
         <template v-if="!isFinished">
-          <button v-if="!isRecording" @click="record" class="btn flex-center">Record</button>
+          <button v-if="!isRecording" @click="record" class="btn flex-center">{{recordBtnContent}}</button>
           <button v-else @click="stop" class="btn">
-            <span style="font-size:3em;">◼</span>
+            <span style="font-size:3em;">{{stopBtnContent}}</span>
           </button>
         </template>
       </div>
       <Loader v-show="isUploading" />
-      <div class="controls" v-if="isFinished && !isUploading && this.uplodeUrl">
-        <button type="button" class="btn" @click.prevent="resetVideo">Cancel</button>
-        <button type="button" class="btn" @click.prevent="done">OK</button>
+      <div class="controls" v-if="isFinished && !isUploading && uploadUrl">
+        <button type="button" class="btn" @click.prevent="resetVideo">{{cancelBtnContent}}</button>
+        <button type="button" class="btn" @click.prevent="done">{{doneBtnContent}}</button>
       </div>
       <h1 class="error-video">{{errText}}</h1>
     </section>
@@ -28,8 +28,20 @@ export default {
     value: {
       default: null
     },
-    uplodeUrl: {
+    uploadUrl: {
       default: null
+    },
+    recordBtnContent: {
+      default: 'Record'
+    },
+    stopBtnContent: {
+      default: '◼'
+    },
+    cancelBtnContent: {
+      default: 'Cancel'
+    },
+    doneBtnContent: {
+      default: 'OK'
     }
   },
   components: {
@@ -48,7 +60,7 @@ export default {
     };
   },
   created() {
-    if (!this.uplodeUrl) this.errText = 'There is no upload url available'
+    if (!this.uploadUrl) this.errText = 'There is no upload url available'
     this.getWebSocket(); // initialize connection to WebSocket
   },
   mounted() {
@@ -74,7 +86,7 @@ export default {
     },
     // start recoording
     record() {
-      if (!this.uplodeUrl) return;
+      if (!this.uploadUrl) return;
       this.recorder.start();
       this.isRecording = true;
     },
@@ -122,7 +134,7 @@ export default {
     },
     // update video when file written
     updateVideoFile(fileName) {
-      this.videoUrl = this.uplodeUrl + fileName + ".webm";
+      this.videoUrl = this.uploadUrl + fileName + ".webm";
       this.toggleVideo();
       this.$refs.videoRec.srcObject = null;
       this.$refs.videoRec.src = this.videoUrl;

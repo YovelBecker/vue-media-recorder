@@ -1,6 +1,6 @@
 <template>
   <section class="single-video">
-    <PhotoCapture v-model="imgBase64" />
+    <PhotoCapture buttonsClasses="green" v-model="imgBase64" />
     <div v-if="imgs.length" class="thumbnails">
       <button @click="clear" class="btn">CLEAR</button>
       <img v-for="(imgSrc, idx) in imgs" :key="idx" :src="imgSrc" alt />
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import PhotoCapture from "@/components/PhotoCapture.vue";
+import PhotoCapture from "../components/PhotoCapture.vue";
 
 export default {
   name: "home",
@@ -51,6 +51,7 @@ export default {
   align-items: center;
   flex-wrap: wrap;
   background-color: rgb(65, 65, 65);
+
   .thumbnails {
     width: 100%;
     display: flex;
@@ -65,5 +66,8 @@ export default {
       margin-bottom: 15px;
     }
   }
+}
+.green {
+  background: yellow;
 }
 </style>

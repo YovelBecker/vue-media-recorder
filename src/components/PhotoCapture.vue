@@ -2,16 +2,15 @@
   <section :style="styling" v-if="isValid" class="photo-capture">
     <video v-show="showVideo" ref="player" class="camera" autoplay playsinline />
     <canvas v-show="!showVideo" class="preview" ref="canvas" />
-    <div class="center photo-capture-actions" v-if="isSingle">
+    <div class="center photo-capture-actions" v-if="!hideButtons">
       <button
-        type="button"
-        class="btn flex-center"
+        :class="'btn flex-center '  + buttonsClasses"
         @click.prevent="capture"
         v-if="showVideo"
-      >Capture</button>
+      >{{captureBtnContent}}</button>
       <div v-else>
-        <button type="button" class="btn" @click.prevent="cancel">Cancel</button>
-        <button type="button" class="btn" @click.prevent="done">OK</button>
+        <button :class="'btn '+ buttonsClasses" @click.prevent="cancel">{{cancelBtnContent}}</button>
+        <button :class="'btn '+ buttonsClasses" @click.prevent="done">{{doneBtnContent}}</button>
       </div>
     </div>
   </section>
@@ -28,9 +27,22 @@ export default {
     value: {
       default: null
     },
-    isSingle: {
+    hideButtons: {
       type: Boolean,
-      default: true
+      default: false
+    },
+    buttonsClasses: {
+      type: String,
+      default: ''
+    },
+    captureBtnContent: {
+      default: 'Capture'
+    },
+    cancelBtnContent: {
+      default: 'Cancel'
+    },
+    doneBtnContent: {
+      default: 'OK'
     }
   },
   data() {

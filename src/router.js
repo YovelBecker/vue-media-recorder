@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import SingleImg from './views/SingleImg.vue'
-import MultipleImg from './views/MultipleImg.vue'
-const VideoRec = () => import('./views/VideoRec')
-Vue.use(Router)
+import Vue from 'vue';
+import Router from 'vue-router';
+import SingleImg from './views/SingleImg.vue';
+import MultipleImg from './views/MultipleImg.vue';
+import VideoRec from './views/VideoRec.vue';
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
@@ -23,6 +23,6 @@ export default new Router({
       path: '/video',
       name: 'videoRec',
       component: VideoRec
-    },
+    }
   ]
-})
+});

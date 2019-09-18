@@ -1,3 +1,4 @@
+//video-capture scss
 .video-cap-container {
   background-color: rgb(65, 65, 65);
   display: flex;
@@ -20,20 +21,53 @@
   }
   .camera {
     width: 500px;
-    transform: scaleX(-1);
     filter: FlipH;
   }
-  .error-video{
+  .error-video {
     font-size: 25px;
     color: #ba5151;
     margin: 10px;
   }
 }
 
-.flex-center{
-  display:flex;
+
+//photo-capture scss
+.photo-capture {
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  .camera,
+  .preview {
+    margin: 10px;
+    width: 100%;
+    object-fit: fill;
+  }
+  .camera {
+    transform: scaleX(-1);
+    filter: FlipH;
+  }
+}
+
+//loader scss
+.loader {
+  margin: 0 auto;
+  border: 16px solid #34495e; /* Light grey */
+  border-top: 16px solid #41b883; /* Blue */
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
+}
+
+
+.flex-center {
+  display: flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .btn {
@@ -54,38 +88,6 @@
   .fas {
     font-size: 25px;
   }
-}
-
-.photo-capture {
-  padding: 10px;
-  margin: 10px;
-  width: 300px;
-  // height: 300px;
-  // background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  .camera,
-  .preview {
-    margin: 10px;
-    width: 100%;
-    object-fit: fill;
-  }
-  .camera {
-    transform: scaleX(-1);
-    filter: FlipH;
-  }
-}
-
-.loader {
-  margin: 0 auto;
-  border: 16px solid #34495e; /* Light grey */
-  border-top: 16px solid #41b883; /* Blue */
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
