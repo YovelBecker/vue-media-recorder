@@ -8,7 +8,8 @@
         @click.prevent="capture"
         v-if="showVideo"
       >{{captureBtnContent}}</button>
-      <div v-else>
+      <!-- this v-else statement does not relate to a v-if -->
+      <div v-else> 
         <button :class="'btn '+ buttonsClasses" @click.prevent="cancel">{{cancelBtnContent}}</button>
         <button :class="'btn '+ buttonsClasses" @click.prevent="done">{{doneBtnContent}}</button>
       </div>
@@ -24,25 +25,25 @@ export default {
       type: Object,
       isRequired: false
     },
-    value: {
-      default: null
-    },
+    // value: {
+    //   default: null
+    // },
     hideButtons: {
       type: Boolean,
       default: false
     },
     buttonsClasses: {
       type: String,
-      default: ''
+      default: ""
     },
     captureBtnContent: {
-      default: 'Capture'
+      default: "Capture"
     },
     cancelBtnContent: {
-      default: 'Cancel'
+      default: "Cancel"
     },
     doneBtnContent: {
-      default: 'OK'
+      default: "OK"
     }
   },
   data() {
@@ -84,7 +85,7 @@ export default {
       this.picture = this.$refs.canvas.toDataURL();
     },
     done() {
-      this.$emit('input', this.picture);
+      this.$emit("input", this.picture);
       this.showVideo = true;
       this.streamUserMediaVideo();
     },

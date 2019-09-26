@@ -25,9 +25,6 @@ import Loader from './Loader.vue'
 export default {
   name: "VideoCapture",
   props: {
-    value: {
-      default: null
-    },
     uploadUrl: {
       default: null
     },
