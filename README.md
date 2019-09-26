@@ -12,7 +12,7 @@ npm install vue-media-recorder
 
 ## Usage
 
-In your component's ```<script>``` tag import the component for your need.
+To use vue-media-recorder in your project all thats needed is to add the following code to your component.
 
 ```
 <template>
