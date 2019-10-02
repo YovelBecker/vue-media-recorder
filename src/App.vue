@@ -9,8 +9,3 @@
   </div>
 </template>
 
-<style lang="scss">
-// .green{
-//   background: yellow;
-// }
-</style>

@@ -23,6 +23,7 @@ To use vue-media-recorder in your project all thats needed is to add the followi
 </template>
 
 <script>
+import 'vue-media-recorder/src/assets/scss/main.scss'
 import {PhotoCapture, VideoCapture} from 'vue-media-recorder'
 
 export default {
