@@ -1,6 +1,7 @@
 # vue-media-recorder
 
-vue-media-recorder is a Vue.js library for using HTML5 media devices to have image and video capturing in a moment.
+vue-media-recorder makes it easy to capture media (Microphone, Camera, Video) in your Vue.js apps.
+
 
 ## Installation
 
@@ -18,48 +19,53 @@ To use vue-media-recorder in your project all thats needed is to add the followi
 <template>
     <div>
         <PhotoCapture v-model="imageBase64" />
-        <VideoCapture uploadUrl="" v-model="videoUrl" />
+        <VideoCapture uploadUrl="<example-server-address.com>" v-model="videoUrl" />
     </div>
 </template>
 
 <script>
-import {PhotoCapture, VideoCapture} from 'vue-media-recorder'
+import { PhotoCapture, VideoCapture } from 'vue-media-recorder'
 
 export default {
     data(){
-        imageBase64: null,
-        videoUrl: null,
+        return {
+            imageBase64: null,
+            videoUrl: null,
+        }
     },
     components:{
         PhotoCapture,
         VideoCapture
+    }
 }
 </script>
 ```
 
 ## VideoCapture Component Usage
 
-For the VideoComponent to work correctly it needs the server url to which it will write the video file while recorded but also the server should be created in a specific way given in this GitHub Repository
+For the VideoCaptrue component to work correctly, pass an uploadUrl prop 
+ for your server.
+Kindly see a sample server here:
 
 [VideoCapture Server Configuration](https://github.com/vyaron/misterRecorder)
 
 
 ## VideoCapture Component Props
-|       Prop       |                             Value                             |
-|:----------------:|:-------------------------------------------------------------:|
-|    uploadUrl     | The server url to which the component will write the video to |
-| recordBtnContent |              content for the video record button              |
-|  stopBtnContent  |             content for the stop recording button             |
-| cancelBtnContent |        button for clearing the recorderd video content        |
-|  doneBtnContent  |     button to confirm video is fine and handling its url      |
+|       Prop       |                             Value                              | IsRequired | Example                          |
+|:----------------:|:--------------------------------------------------------------:|------------|----------------------------------|
+|    uploadUrl     | The server url to which the component will upload the video to | true       | 'localhost:3000' / 'foo-bar.com' |
+| recordBtnContent |              content for the video record button               | false      | '⬤'                              |
+|  stopBtnContent  |             content for the stop recording button              | false      | '◼'                              |
+| cancelBtnContent |        button for clearing the recorderd video content         | false      | 'ⅹ'                              |
+|  doneBtnContent  |      button to confirm video is fine and handling its url      | false      | '✓'                              |
 
 
 ## PhotoCapture Component Props
-|       Prop       |                             Value                             |
-|:----------------:|:-------------------------------------------------------------:|
-| capturedBtnContent |              content for the image capture button              |
-| cancelBtnContent |        button for clearing the captured image content        |
-|  doneBtnContent  |     button to confirm image is fine and handling its base64 format      |
+|        Prop        |                             Value                              | IsRequired | Example |
+|:------------------:|:--------------------------------------------------------------:|------------|---------|
+| capturedBtnContent |              content for the image capture button              | false      | '📷'    |
+|  cancelBtnContent  |         button for clearing the captured image content         | false      | 'ⅹ'     |
+|   doneBtnContent   | button to confirm image is fine and handling its base64 format | false      | '✓'     |
 
 
 

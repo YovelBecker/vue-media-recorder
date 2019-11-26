@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/img/mult">Security Cameras</router-link> |
-      <router-link to="/">Image Demo</router-link> |
-      <router-link to="/video">Video Demo</router-link> |
-    </div>
+    <NavBar />
     <router-view/>
   </div>
 </template>
 
+<script>
+import NavBar from './components/NavBar'
+export default {
+  components:{
+    NavBar
+  }
+}
+</script>
+
 <style lang="scss">
-// .green{
-//   background: yellow;
-// }
 </style>

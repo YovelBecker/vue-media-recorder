@@ -1,6 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap');
+
+
+html,body{
+  margin: 0;
+  padding: 0;
+  background-color: rgb(65, 65, 65);
+  font-family: 'Roboto', sans-serif;
+}
+
+// Nav menu scss
+#nav {
+  border: 1px solid blue;
+  margin: 20px auto;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  color:rgb(167, 167, 167);
+  *{
+    margin: 10px;
+  }
+  a{
+    color: rgb(167, 167, 167);
+    text-decoration: none;
+  }
+}
+
+
 //video-capture scss
 .video-cap-container {
-  background-color: rgb(65, 65, 65);
   display: flex;
   flex-direction: column;
   align-items: center;
