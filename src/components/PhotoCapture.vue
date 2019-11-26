@@ -8,7 +8,6 @@
         @click.prevent="capture"
         v-if="showVideo"
       >{{captureBtnContent}}</button>
-      <!-- this v-else statement does not relate to a v-if -->
       <div v-else> 
         <button :class="'btn '+ buttonsClasses" @click.prevent="cancel">{{cancelBtnContent}}</button>
         <button :class="'btn '+ buttonsClasses" @click.prevent="done">{{doneBtnContent}}</button>
@@ -25,9 +24,9 @@ export default {
       type: Object,
       isRequired: false
     },
-    // value: {
-    //   default: null
-    // },
+    value: {
+      default: null
+    },
     hideButtons: {
       type: Boolean,
       default: false
