@@ -2,8 +2,7 @@
   <section :style="styling" v-if="isValid" class="photo-capture">
     <video v-show="showVideo" ref="player" class="camera" autoplay playsinline />
     <canvas v-show="!showVideo" class="preview" ref="canvas" />
-    <h1>TESTING</h1>
-    <div class="center photo-capture-actions" >
+    <div v-if="!hideBtns" class="center photo-capture-actions" >
       <button
         :class="'btn flex-center '  + buttonsClasses"
         @click.prevent="capture"
@@ -21,6 +20,11 @@
 export default {
   name: "PhotoCapture",
   props: {
+    hideBtns:{
+      type:Boolean,
+      isRequired: false,
+      default:false
+    },
     styling: {
       type: Object,
       isRequired: false

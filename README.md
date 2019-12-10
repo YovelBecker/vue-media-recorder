@@ -51,21 +51,21 @@ Kindly see a sample server here:
 
 
 ## VideoCapture Component Props
-|       Prop       |                             Value                              | IsRequired | Example                          |
-|:----------------:|:--------------------------------------------------------------:|------------|----------------------------------|
-|    uploadUrl     | The server url to which the component will upload the video to | true       | 'localhost:3000' / 'foo-bar.com' |
-| recordBtnContent |              content for the video record button               | false      | '⬤'                              |
-|  stopBtnContent  |             content for the stop recording button              | false      | '◼'                              |
-| cancelBtnContent |        button for clearing the recorderd video content         | false      | 'ⅹ'                              |
-|  doneBtnContent  |      button to confirm video is fine and handling its url      | false      | '✓'                              |
+|Prop              |Value                                                           | IsRequired | Example                     |
+|:----------------:|:--------------------------------------------------------------:|------------|-----------------------------|
+| uploadUrl        | The server url to which the component will upload the video to | true  | 'localhost:3000' / 'foo-bar.com' |
+| recordBtnContent | content for the video record button                            | false | '⬤'                             |
+| stopBtnContent   | content for the stop recording button                          | false | '◼'                              |
+| cancelBtnContent | button for clearing the recorderd video content                | false | 'ⅹ'                              |
+| doneBtnContent   | button to confirm video is fine and handling its url           | false | '✓'                              |
 
 
 ## PhotoCapture Component Props
-|        Prop        |                             Value                              | IsRequired | Example |
+|Prop                |Value                                                           | IsRequired | Example |
 |:------------------:|:--------------------------------------------------------------:|------------|---------|
-| capturedBtnContent |              content for the image capture button              | false      | '📷'    |
-|  cancelBtnContent  |         button for clearing the captured image content         | false      | 'ⅹ'     |
-|   doneBtnContent   | button to confirm image is fine and handling its base64 format | false      | '✓'     |
+| capturedBtnContent | content for the image capture button                           | false      | '📷'    |
+| cancelBtnContent   | button for clearing the captured image content                 | false      | 'ⅹ'     |
+| doneBtnContent     | button to confirm image is fine and handling its base64 format | false      | '✓'     |
 
 
 

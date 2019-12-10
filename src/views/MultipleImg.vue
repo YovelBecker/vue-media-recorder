@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <PhotoCapture :hideButtons="true" v-for="n in 10" :key="n" />
+    <PhotoCapture :styling="styling" :hideBtns="true" :hideButtons="true" v-for="n in 10" :key="n" />
   </section>
 </template>
 
@@ -9,6 +9,13 @@ import PhotoCapture from '../components/PhotoCapture.vue';
 
 export default {
   name: "home",
+  data(){
+    return {
+      styling:{
+        
+      }
+    }
+  },
   components: {
     PhotoCapture
   }

@@ -50,8 +50,9 @@ html,body{
   .camera {
     width: 500px;
     transform: scaleX(-1);
-
     filter: FlipH;
+    // transform: rotateY(180deg);
+  
   }
   .error-video {
     font-size: 25px;
@@ -63,8 +64,8 @@ html,body{
 
 //photo-capture scss
 .photo-capture {
-  padding: 10px;
-  margin: 10px;
+  // padding: 10px;
+  // margin: 10px;
   width: 300px;
   display: flex;
   flex-direction: column;
