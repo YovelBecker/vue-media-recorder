@@ -51,7 +51,7 @@ Kindly see a sample server here:
 
 
 ## VideoCapture Component Props
-|Prop              |Value                                                           | IsRequired | Example                     |
+| Prop             | Value                                                          | IsRequired | Example                     |
 |:----------------:|:--------------------------------------------------------------:|------------|-----------------------------|
 | uploadUrl        | The server url to which the component will upload the video to | true  | 'localhost:3000' / 'foo-bar.com' |
 | recordBtnContent | content for the video record button                            | false | '⬤'                             |
@@ -61,7 +61,7 @@ Kindly see a sample server here:
 
 
 ## PhotoCapture Component Props
-|Prop                |Value                                                           | IsRequired | Example |
+| Prop               | Value                                                          | IsRequired | Example |
 |:------------------:|:--------------------------------------------------------------:|------------|---------|
 | capturedBtnContent | content for the image capture button                           | false      | '📷'    |
 | cancelBtnContent   | button for clearing the captured image content                 | false      | 'ⅹ'     |
