@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 dist
+TODO.txt
+
 
 # local env files
 .env.local

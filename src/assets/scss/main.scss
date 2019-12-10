@@ -49,6 +49,8 @@ html,body{
   }
   .camera {
     width: 500px;
+    transform: scaleX(-1);
+
     filter: FlipH;
   }
   .error-video {
