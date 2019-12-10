@@ -20,7 +20,8 @@ export default {
   data() {
     return {
       videoUrl: null,
-      uploadUrl: "https://puki.ninja/uploads/"
+      // uploadUrl: "http://localhost:3000/uploads/"
+      uploadUrl: "https://mister-recorder.herokuapp.com/uploads/"
     }
   }
 };

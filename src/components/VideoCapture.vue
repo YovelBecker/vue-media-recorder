@@ -121,10 +121,13 @@ export default {
     },
     // initialize WebSocket
     getWebSocket() {
-      const websocketEndpoint = "wss://puki.ninja";
+      const websocketEndpoint = "wss://mister-recorder.herokuapp.com";
+      // const websocketEndpoint = "ws://localhost:3000";
       this.connection = new WebSocket(websocketEndpoint);
+      // console.log('connection', this.connection)
       this.connection.binaryType = "arraybuffer";
       this.connection.onmessage = message => {
+        // console.log('data available')
         this.updateVideoFile(message.data);
         this.$refs.videoRec.muted = false;
       };
@@ -132,6 +135,7 @@ export default {
     // update video when file written
     updateVideoFile(fileName) {
       this.videoUrl = this.uploadUrl + fileName + ".webm";
+      // console.log(this.videoUrl)
       this.toggleVideo();
       this.$refs.videoRec.srcObject = null;
       this.$refs.videoRec.src = this.videoUrl;

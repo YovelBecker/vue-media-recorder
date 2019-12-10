@@ -2,13 +2,14 @@
   <section :style="styling" v-if="isValid" class="photo-capture">
     <video v-show="showVideo" ref="player" class="camera" autoplay playsinline />
     <canvas v-show="!showVideo" class="preview" ref="canvas" />
-    <div class="center photo-capture-actions" v-if="!hideButtons">
+    <h1>TESTING</h1>
+    <div class="center photo-capture-actions" >
       <button
         :class="'btn flex-center '  + buttonsClasses"
         @click.prevent="capture"
         v-if="showVideo"
       >{{captureBtnContent}}</button>
-      <div v-else> 
+      <div v-else>
         <button :class="'btn '+ buttonsClasses" @click.prevent="cancel">{{cancelBtnContent}}</button>
         <button :class="'btn '+ buttonsClasses" @click.prevent="done">{{doneBtnContent}}</button>
       </div>

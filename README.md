@@ -13,7 +13,7 @@ npm install vue-media-recorder
 
 ## Usage
 
-To use vue-media-recorder in your project all thats needed is to add the following code to your component.
+Using vue-media-recorder is easy:
 
 ```
 <template>
@@ -24,18 +24,13 @@ To use vue-media-recorder in your project all thats needed is to add the followi
 </template>
 
 <script>
-<<<<<<< HEAD
-import { PhotoCapture, VideoCapture } from 'vue-media-recorder'
-=======
-import 'vue-media-recorder/src/assets/scss/main.scss'
 import {PhotoCapture, VideoCapture} from 'vue-media-recorder'
->>>>>>> e923d7dae5c8b90d7bf6fe14411cdc0d8e669d04
 
 export default {
     data(){
         return {
-            imageBase64: null,
-            videoUrl: null,
+            imageBase64: '',
+            videoUrl: '',
         }
     },
     components:{

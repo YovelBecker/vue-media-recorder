@@ -1,6 +1,6 @@
 <template>
   <section class="single-video">
-    <PhotoCapture buttonsClasses="green" v-model="imgBase64" />
+    <PhotoCapture  v-model="imgBase64" />
     <div v-if="imgs.length" class="thumbnails">
       <button @click="clear" class="btn">CLEAR</button>
       <img v-for="(imgSrc, idx) in imgs" :key="idx" :src="imgSrc" alt />
