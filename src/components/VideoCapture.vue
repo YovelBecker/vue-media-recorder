@@ -1,27 +1,25 @@
 <template>
-  <section v-if="isValid">
-    <section class="video-cap-container">
-      <div v-show="!isUploading" class="stream-container">
-        <video ref="videoRec" class="camera" muted loop controls autoplay />
-        <template v-if="!isFinished">
-          <button v-if="!isRecording" @click="record" class="btn flex-center">{{recordBtnContent}}</button>
-          <button v-else @click="stop" class="btn">
-            <span style="font-size:3em;">{{stopBtnContent}}</span>
-          </button>
-        </template>
-      </div>
-      <Loader v-show="isUploading" />
-      <div class="controls" v-if="isFinished && !isUploading && uploadUrl">
-        <button type="button" class="btn" @click.prevent="resetVideo">{{cancelBtnContent}}</button>
-        <button type="button" class="btn" @click.prevent="done">{{doneBtnContent}}</button>
-      </div>
-      <h1 class="error-video">{{errText}}</h1>
-    </section>
+  <section class="video-cap-container" v-if="isValid">
+    <div v-show="!isUploading" class="stream-container">
+      <video ref="videoRec" class="camera" muted loop controls autoplay />
+      <template v-if="!isFinished">
+        <button v-if="!isRecording" @click="record" class="btn flex-center">{{recordBtnContent}}</button>
+        <button v-else @click="stop" class="btn">
+          <span style="font-size:3em;">{{stopBtnContent}}</span>
+        </button>
+      </template>
+    </div>
+    <Loader v-show="isUploading" />
+    <div class="controls" v-if="isFinished && !isUploading && uploadUrl">
+      <button type="button" class="btn" @click.prevent="resetVideo">{{cancelBtnContent}}</button>
+      <button type="button" class="btn" @click.prevent="done">{{doneBtnContent}}</button>
+    </div>
+    <h1 class="error-video">{{errText}}</h1>
   </section>
 </template>
 
 <script>
-import Loader from './Loader.vue'
+import Loader from "./Loader.vue";
 export default {
   name: "VideoCapture",
   props: {
@@ -29,16 +27,16 @@ export default {
       default: null
     },
     recordBtnContent: {
-      default: 'Record'
+      default: "Record"
     },
     stopBtnContent: {
-      default: '◼'
+      default: "◼"
     },
     cancelBtnContent: {
-      default: 'Cancel'
+      default: "Cancel"
     },
     doneBtnContent: {
-      default: 'OK'
+      default: "OK"
     }
   },
   components: {
@@ -57,7 +55,7 @@ export default {
     };
   },
   created() {
-    if (!this.uploadUrl) this.errText = 'There is no upload url available'
+    if (!this.uploadUrl) this.errText = "There is no upload url available";
     this.getWebSocket(); // initialize connection to WebSocket
   },
   mounted() {
@@ -89,10 +87,10 @@ export default {
     },
     // stop recording
     stop() {
-      this.recorder.stop()
+      this.recorder.stop();
       this.isRecording = false;
       this.isFinished = true;
-      this.connection.send("DONE")
+      this.connection.send("DONE");
     },
     // reset video diaply and emit video file url
     done() {
@@ -121,21 +119,17 @@ export default {
     },
     // initialize WebSocket
     getWebSocket() {
-      const websocketEndpoint = "wss://mister-recorder.herokuapp.com";
-      // const websocketEndpoint = "ws://localhost:3000";
+      const websocketEndpoint = "wss://" + this.uploadUrl;
       this.connection = new WebSocket(websocketEndpoint);
-      // console.log('connection', this.connection)
       this.connection.binaryType = "arraybuffer";
       this.connection.onmessage = message => {
-        // console.log('data available')
         this.updateVideoFile(message.data);
         this.$refs.videoRec.muted = false;
       };
     },
     // update video when file written
     updateVideoFile(fileName) {
-      this.videoUrl = this.uploadUrl + fileName + ".webm";
-      // console.log(this.videoUrl)
+      this.videoUrl = `https://${this.uploadUrl}/uploads/${fileName}.webm`
       this.toggleVideo();
       this.$refs.videoRec.srcObject = null;
       this.$refs.videoRec.src = this.videoUrl;

@@ -1,6 +1,6 @@
 <template>
   <section class="video-rec-container">
-    <video-capture :uploadUrl="uploadUrl" v-model="videoUrl" />
+    <VideoCapture :uploadUrl="uploadUrl" v-model="videoUrl" />
     <div v-if="videoUrl" class="video-url-containe">
       <h1>Your Video URL</h1>
       <a :href="videoUrl">
@@ -20,8 +20,7 @@ export default {
   data() {
     return {
       videoUrl: null,
-      // uploadUrl: "http://localhost:3000/uploads/"
-      uploadUrl: "https://mister-recorder.herokuapp.com/uploads/"
+      uploadUrl: "mister-recorder.herokuapp.com"
     }
   }
 };
