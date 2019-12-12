@@ -51,7 +51,8 @@ export default {
       isFinished: false, // finished recording - action buttons indicator
       recorder: null, // component wide MediaRecorder
       connection: null, // component wide WebSocket
-      videoUrl: null // link to video - assigned when done writing video file
+      videoUrl: null, // link to video - assigned when done writing video file
+      stream: null
     };
   },
   created() {
@@ -99,6 +100,7 @@ export default {
     },
     // initialize MediaRecorder and video element source
     gotStream(mediaStream) {
+      this.stream = mediaStream;
       this.recorder = new MediaRecorder(mediaStream, {
         mimeType: "video/webm",
         audioBitsPerSecond: 128000
@@ -129,7 +131,7 @@ export default {
     },
     // update video when file written
     updateVideoFile(fileName) {
-      this.videoUrl = `https://${this.uploadUrl}/uploads/${fileName}.webm`
+      this.videoUrl = `https://${this.uploadUrl}/uploads/${fileName}.webm`;
       this.toggleVideo();
       this.$refs.videoRec.srcObject = null;
       this.$refs.videoRec.src = this.videoUrl;
@@ -140,6 +142,11 @@ export default {
       this.$refs.videoRec.loop = !this.$refs.videoRec.loop;
       this.$refs.videoRec.controls = !this.$refs.videoRec.controls;
     }
+  },
+  destroyed() {
+    this.stream.getTracks().forEach(function(track) {
+      track.stop();
+    });
   }
 };
 </script>

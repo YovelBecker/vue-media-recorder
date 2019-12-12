@@ -9,13 +9,14 @@
     "build-bundle": "vue-cli-service build --target lib --name vue-media-recorder ./src/components/index.js",
     "lint": "vue-cli-service lint",
     "dev": "code . & npm run serve",
-    "deploy":"npm run build&cd dist&git add .&git commit -m 's'"
+    "commit": "sh scripts/commit.sh"
   },
   "dependencies": {
     "core-js": "^2.6.5",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
+    "vue-slider-component": "^3.1.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

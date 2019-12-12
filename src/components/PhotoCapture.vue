@@ -8,7 +8,7 @@
         @click.prevent="capture"
         v-if="showVideo"
       >{{captureBtnContent}}</button>
-      <div v-else>
+      <div class="controls" v-else>
         <button :class="'btn '+ buttonsClasses" @click.prevent="cancel">{{cancelBtnContent}}</button>
         <button :class="'btn '+ buttonsClasses" @click.prevent="done">{{doneBtnContent}}</button>
       </div>

@@ -1,25 +1,32 @@
 <template>
   <section class="single-video">
-    <PhotoCapture v-model="imgBase64" />
-    <button v-if="imgs.length" @click="clear" class="btn">CLEAR</button>
-    <div v-if="imgs.length" class="thumbnails">
-      <img v-for="(imgSrc, idx) in imgs" :key="idx" :src="imgSrc" />
+    <PhotoCapture @input="handleDone" />
+    <div class="galleries-container">
+      <div class="img-list" v-if="imgs.length">
+        <span>
+          <h1>Look At Yourself!</h1>
+          <button @click="clear" class="btn">CLEAR</button>
+        </span>
+        <ImgList :imgs="imgs" />
+      </div>
+      <ImgGallery v-if="imgs.length" :imgs="imgs" />
     </div>
   </section>
 </template>
 
 <script>
 import PhotoCapture from "../components/PhotoCapture.vue";
-
+import ImgList from "../components/ImgList";
+import ImgGallery from "../components/ImgGallery";
 export default {
-  name: "home",
   components: {
-    PhotoCapture
+    PhotoCapture,
+    ImgList,
+    ImgGallery
   },
   data() {
     return {
-      imgs: [],
-      imgBase64: null
+      imgs: []
     };
   },
   created() {
@@ -27,18 +34,13 @@ export default {
     if (!this.imgs) this.imgs = [];
   },
   methods: {
-    handleDone() {
-      this.imgs.push(this.imgBase64);
+    handleDone(imgBase64) {
+      this.imgs.push(imgBase64);
       localStorage.setItem("thumbnails", JSON.stringify(this.imgs));
     },
     clear() {
       localStorage.clear();
       this.imgs = [];
-    }
-  },
-  watch: {
-    imgBase64() {
-      this.handleDone();
     }
   }
 };
@@ -50,20 +52,25 @@ export default {
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
-  // background-color: rgb(65, 65, 65);
-
-  .thumbnails {
-    width: 100%;
+  height:100vh;
+  .galleries-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    @media screen and (min-width: 600px) {
-      justify-content: space-around;
+    & > * {
+      margin: 0 10px;
+      box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+      border:1px solid rgba(65,65,65,0.3);
+      height:480px;
     }
-    img {
-      width: 260px;
-      height: 200px;
-      margin-bottom: 15px;
+    .img-list {
+      padding:10px;
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        font-size: 1.5rem;
+      }
     }
   }
 }

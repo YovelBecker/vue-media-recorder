@@ -4,6 +4,6 @@
 
 module.exports = {
     publicPath: process.env.NODE_ENV === 'production'
-        ? '/proj-name/'
+        ? '/vue-media-recorder/'
         : '/'
 }

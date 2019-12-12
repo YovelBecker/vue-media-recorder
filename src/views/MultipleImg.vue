@@ -1,23 +1,39 @@
 <template>
   <section class="home">
-    <PhotoCapture :styling="styling" :hideBtns="true" :hideButtons="true" v-for="n in 10" :key="n" />
+    <div class="controls">
+      <Clock />
+      <vue-slider
+        :dotSize="[24,24]"
+        :min="5"
+        :max="70"
+        :height="10"
+        :width="500"
+        v-model="streamCount"
+      />
+    </div>
+
+    <div class="streams-container">
+      <PhotoCapture :hideBtns="true" :hideButtons="true" v-for="n in streamCount" :key="n" />
+    </div>
   </section>
 </template>
 
 <script>
-import PhotoCapture from '../components/PhotoCapture.vue';
+import PhotoCapture from "../components/PhotoCapture.vue";
+import Clock from "../components/Clock";
+import VueSlider from "vue-slider-component";
+import "vue-slider-component/theme/antd.css";
 
 export default {
-  name: "home",
-  data(){
+  data() {
     return {
-      styling:{
-        
-      }
-    }
+      streamCount: 20
+    };
   },
   components: {
-    PhotoCapture
+    PhotoCapture,
+    VueSlider,
+    Clock
   }
 };
 </script>
@@ -25,7 +41,21 @@ export default {
 <style lang="scss" scoped>
 .home {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.controls{
+  display:flex;
+  align-items:center;
+  margin:20px;
+  *{
+    margin:0 24px;
+  }
+}
+.streams-container {
+  margin: 0 auto;
+  max-width: 100vw;
+  display: flex;
   flex-wrap: wrap;
 }
 </style>
