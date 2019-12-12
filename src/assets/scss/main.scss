@@ -1,31 +1,39 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap");
 
-
-html,body{
+html,
+body {
   margin: 0;
   padding: 0;
-  background-color: rgb(65, 65, 65);
-  font-family: 'Roboto', sans-serif;
+  background-color: rgb(224, 224, 224);
+  // background-color: rgb(65, 65, 65);
+  font-family: "Roboto", sans-serif;
 }
 
 // Nav menu scss
-#nav {
-  border: 1px solid blue;
-  margin: 20px auto;
+.nav-bar-container {
+  margin-bottom: 80px;
   font-size: 25px;
   display: flex;
-  justify-content: center;
-  align-items:center;
-  color:rgb(167, 167, 167);
-  *{
-    margin: 10px;
-  }
-  a{
-    color: rgb(167, 167, 167);
-    text-decoration: none;
+  flex-direction: column;
+  align-items: center;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.25);
+
+  #nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(46, 46, 46);
+    * {
+      margin: 10px;
+    }
+    a {
+      color: rgb(46, 46, 46);
+      text-decoration: none;
+    }
   }
 }
-
 
 //video-capture scss
 .video-cap-container {
@@ -52,7 +60,6 @@ html,body{
     transform: scaleX(-1);
     filter: FlipH;
     // transform: rotateY(180deg);
-  
   }
   .error-video {
     font-size: 25px;
@@ -60,7 +67,6 @@ html,body{
     margin: 10px;
   }
 }
-
 
 //photo-capture scss
 .photo-capture {
@@ -94,7 +100,6 @@ html,body{
   animation: spin 2s linear infinite;
 }
 
-
 .flex-center {
   display: flex;
   justify-content: center;
@@ -103,12 +108,12 @@ html,body{
 
 .btn {
   margin-top: 10px;
-  background-color: #34495e;
-  color: #049161;
+  background-color: transparent;
+  color: red;
   margin: 10px;
   min-width: 65px;
   height: 65px;
-  border: none;
+  border: 1px solid rgb(65,65,65);
   border-radius: 50%;
   cursor: pointer;
   transition: 0.3s;

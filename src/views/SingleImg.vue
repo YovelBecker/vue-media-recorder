@@ -50,7 +50,7 @@ export default {
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
-  background-color: rgb(65, 65, 65);
+  // background-color: rgb(65, 65, 65);
 
   .thumbnails {
     width: 100%;
