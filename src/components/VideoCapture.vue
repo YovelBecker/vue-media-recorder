@@ -66,7 +66,7 @@ export default {
     resetVideo() {
       this.isFinished = false;
       this.isRecording = false;
-      this.isLoading = true;
+      
       this.$refs.videoRec.muted = true;
       navigator.mediaDevices
         .getUserMedia({
