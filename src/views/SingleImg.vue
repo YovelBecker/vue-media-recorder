@@ -1,6 +1,6 @@
 <template>
   <section class="single-video">
-    <PhotoCapture @input="handleDone" />
+    <PhotoCapture :styling="styling" @input="handleDone" />
     <div class="galleries-container">
       <div class="img-list" v-if="imgs.length">
         <span>
@@ -26,7 +26,10 @@ export default {
   },
   data() {
     return {
-      imgs: []
+      imgs: [],
+      styling:{
+        'max-width':'60%'
+      }
     };
   },
   created() {
@@ -47,14 +50,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.photo-capture {
+  max-width: 60% !important;
+}
 .single-video {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   height:100vh;
   .galleries-container {
     display: flex;
+    // flex-direction:column;
     justify-content: center;
     & > * {
       margin: 0 10px;

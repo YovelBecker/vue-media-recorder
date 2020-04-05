@@ -1,6 +1,6 @@
 {
-  "name": "img-vid-proj",
-  "short_name": "img-vid-proj",
+  "name": "Vue Media Recorder Demo",
+  "short_name": "Vue Media Recorder Demo",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
